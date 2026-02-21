@@ -76,7 +76,7 @@ func (r *UserRepository) GetAllUsers() ([]model.User, error) {
 }
 
 // Update user
-func (r *UserRepository) UpdateUser(id int, user *model.User) error {
+func (r *UserRepository) UpdateUser(user *model.User) error {
 	query := "Update user set name=? address =? where id =?"
 	result, err := r.db.Exec(query, user.Name, user.Address, user.ID)
 	if err != nil {

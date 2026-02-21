@@ -47,12 +47,12 @@ func (s *UserService) GetAllUsers() ([]model.User, error) {
 	return s.repo.GetAllUsers()
 }
 
-func (s *UserService) UpdateUser(id int, user *model.User) error {
-	if id < 1 {
+func (s *UserService) UpdateUser(user *model.User) error {
+	if user.ID < 1 {
 		return fmt.Errorf("Id is Invalid")
 	}
 
-	u, err := s.repo.GetByid(id)
+	u, err := s.repo.GetByid(user.ID)
 	if err != nil {
 		return fmt.Errorf("User Not Found")
 	}
@@ -63,7 +63,7 @@ func (s *UserService) UpdateUser(id int, user *model.User) error {
 	if user.Address != "" {
 		u.Address = user.Address
 	}
-	return s.repo.UpdateUser(id, u)
+	return s.repo.UpdateUser(u)
 }
 
 func ValidateUser(user *model.User) error {
