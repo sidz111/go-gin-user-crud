@@ -16,8 +16,8 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 }
 
 // Create
-func (r *UserRepository) Create(user model.User) error {
-	query := "Insert into student(name, address) values(?,?)"
+func (r *UserRepository) Create(user *model.User) error {
+	query := "Insert into user(name, address) values(?,?)"
 	_, err := r.db.Exec(query, user.Name, user.Address)
 	if err != nil {
 		return fmt.Errorf("Failed to create User %w", err)
@@ -41,7 +41,7 @@ func (r *UserRepository) GetByid(id int) (*model.User, error) {
 
 // delete by id
 func (r *UserRepository) DeleteById(id int) error {
-	query := "delete from usser where id =?"
+	query := "delete from user where id =?"
 	result, err := r.db.Exec(query, id)
 	if err != nil {
 		return fmt.Errorf("Failed to delete user %w", err)
@@ -77,7 +77,7 @@ func (r *UserRepository) GetAllUsers() ([]model.User, error) {
 
 // Update user
 func (r *UserRepository) UpdateUser(user *model.User) error {
-	query := "Update user set name=? address =? where id =?"
+	query := "Update user set name=?, address =? where id =?"
 	result, err := r.db.Exec(query, user.Name, user.Address, user.ID)
 	if err != nil {
 		return fmt.Errorf("Fail to Update User %w", err)

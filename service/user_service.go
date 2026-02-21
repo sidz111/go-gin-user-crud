@@ -19,7 +19,7 @@ func (s *UserService) Create(user *model.User) (*model.User, error) {
 	if err := ValidateUser(user); err != nil {
 		return nil, err
 	}
-	if err := s.repo.Create(*user); err != nil {
+	if err := s.repo.Create(user); err != nil {
 		return nil, err
 	}
 	return user, nil
@@ -37,10 +37,14 @@ func (s *UserService) GetByID(id int) (*model.User, error) {
 }
 
 func (s *UserService) DeletebyId(id int) error {
-	if id < 1 {
+	if id <= 0 {
 		return fmt.Errorf("Id is Invalid")
 	}
-	return s.DeletebyId(id)
+	err := s.repo.DeleteById(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *UserService) GetAllUsers() ([]model.User, error) {

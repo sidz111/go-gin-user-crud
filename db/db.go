@@ -4,16 +4,18 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func ConnectDb() *sql.DB {
-	dbUsername := "root"
-	dbPassword := "root"
-	dbHost := "localhost"
-	dbPort := 3303
+	dbUser := "root"
+	dbPass := "root"
+	host := "localhost"
+	port := 3303
 	dbName := "user_db"
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)%s", dbUsername, dbPassword, dbHost, dbPort, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", dbUser, dbPass, host, port, dbName)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("Failed to connect DB")
